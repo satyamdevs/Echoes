@@ -26,6 +26,10 @@ export default function Page() {
     });
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!user.email || !user.password) {
+            toast.error("Please fill in all fields");
+            return;
+        }
         try {
             const response = await axios.post("/api/users/login", user);
             console.log("Login success", response.data);
@@ -37,11 +41,7 @@ export default function Page() {
             toast.error("Login failed");
         }
     };
-    useEffect(() => {
-        if(!user.email || !user.password) {
-            toast.error("Please fill in all fields");
-        }
-    }, [user]);
+
 
     return (
       <div className="w-full h-screen flex justify-center items-center mx-auto  p-6 bg-black  shadow">
