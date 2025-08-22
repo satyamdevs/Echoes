@@ -24,21 +24,25 @@ export default function Page() {
         email: "",
         password: ""
     });
+    const [Loading, setLoading] = React.useState(false)
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user.email || !user.password) {
             toast.error("Please fill in all fields");
             return;
         }
+        setLoading(true);
         try {
             const response = await axios.post("/api/users/login", user);
             console.log("Login success", response.data);
             toast.success("Login successful");
             setUser({ email: "", password: "" });
             Router.push("/Home"); 
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error during login:', error);
-            toast.error("Login failed");
+            toast.error(error.response?.data?.error ||  "Login failed");
+        }finally{
+            setLoading(false);
         }
     };
 
@@ -100,8 +104,8 @@ export default function Page() {
                       </form>
                   </CardContent>
                   <CardFooter className="flex-col gap-2">
-                      <Button type="submit" onClick={handleLogin} className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                          Login
+                      <Button type="submit" disabled= {Loading} onClick={handleLogin} className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                          {Loading ? "Logging in..." : "Login"}
                       </Button>
                   </CardFooter>
               </Card>
