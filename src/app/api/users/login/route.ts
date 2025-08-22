@@ -15,12 +15,11 @@ export async function POST(request: NextRequest) {
         const user = await User.findOne({email})
         if(!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
-            toast.error("User not found");
         }
         const validpassword = await bcrypt.compare(password, user.password);
         if (!validpassword) {
-            return NextResponse.json({ error: "Incorrect Password" }, { status: 400 });
             toast.error("Incorrect Password");
+            return NextResponse.json({ error: "Incorrect Password" }, { status: 400 });
         }
         const tokendata = {
             id: user._id,
@@ -43,6 +42,5 @@ export async function POST(request: NextRequest) {
     } catch (error) {
         console.error("Error in login API:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
-        toast.error("Login failed");
     }
 }
