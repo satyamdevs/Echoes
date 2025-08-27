@@ -15,6 +15,7 @@ export async function POST(request: Request) {
         const existingUser = await User.findOne({email})
         if(existingUser){
             return NextResponse.json({ error: "User already exists" }, { status: 400 });
+            toast.error("User Already Exists")
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -31,5 +32,6 @@ export async function POST(request: Request) {
     } catch (error) {
         console.error("Error in signup API:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+        toast.error("User creation failed");
     }
 }
