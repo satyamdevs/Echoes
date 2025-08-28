@@ -13,9 +13,10 @@ import {
 
 interface HeaderProps {
   className?: string;
+  Name?: string | null;
 }
 
-export default function Header({ className }: HeaderProps) {
+export default function Header({ className, Name }: HeaderProps) {
   return (
     <header className={`bg-slate-900 border-b border-slate-800 px-6 py-3 ${className}`}>
       <div className="flex items-center justify-between">
@@ -60,6 +61,7 @@ export default function Header({ className }: HeaderProps) {
         <div className="flex items-center">
           <Button variant="ghost" size="sm" className="text-slate-300 hover:text-white hover:bg-slate-800 p-2">
             <UserCircle className="w-6 h-6" />
+            <h1 >{`${Name}`}</h1>
           </Button>
         </div>
       </div>
