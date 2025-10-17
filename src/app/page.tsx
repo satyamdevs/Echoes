@@ -6,7 +6,7 @@ export default function Home() {
   const router = useRouter();
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push('./SignIn');
+      router.push('./Dashboard');
     });
     return () => clearTimeout(timer);
   }, [router]);
